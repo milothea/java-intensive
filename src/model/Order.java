@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 import src.utils.DateFormatter;
 
-public class Order extends DateFormatter {
-    private final int orderNumber;
-    private final String[] orderedBooks;
-    private final BigDecimal totalPrice;
-    private final LocalDateTime orderDate;
+public class Order {
+    private int orderNumber;
+    private String[] orderedBooks;
+    private BigDecimal totalPrice;
+    private LocalDateTime orderDate;
 
     public Order(BigDecimal price, String[] books, int orderNumber) {
         this.orderDate = LocalDateTime.now();
@@ -26,7 +26,7 @@ public class Order extends DateFormatter {
 
         return String.format(
                 "Order with No. %d created on %s for books - %s - with total price %s",
-                this.getOrderNumber(), this.formatDate(date), Arrays.toString(books), price
+                this.getOrderNumber(), DateFormatter.formatDate(date), Arrays.toString(books), price
         );
     }
 

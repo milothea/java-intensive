@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 
 import src.utils.DateFormatter;
 
-public class ApartmentReservation extends DateFormatter {
-    private final int apartmentNumber;
-    private final BigDecimal price;
-    private final LocalDateTime bookingDate;
+public class ApartmentReservation {
+    private int apartmentNumber;
+    private BigDecimal price;
+    private LocalDateTime bookingDate;
 
     public ApartmentReservation(BigDecimal price, int apartmentNumber) {
         this.price = price;
@@ -21,7 +21,7 @@ public class ApartmentReservation extends DateFormatter {
 
         return String.format(
                 "Reservation of the apartment No. %d is made on %s with price %s",
-                this.apartmentNumber, this.formatDate(date), this.price
+                this.apartmentNumber, DateFormatter.formatDate(date), this.price
         );
     }
 

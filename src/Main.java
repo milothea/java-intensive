@@ -11,20 +11,29 @@ import src.constants.Actions;
 
 public class Main {
     public static void main(String[] args) {
-        RegisterService registerService = new RegisterService();
-        OrderService orderService = new OrderService();
-        Scanner input = new Scanner(System.in);
-        String action;
-        String userInput;
-
         System.out.println("Enter 'apart' to book an apartment. Enter 'book' to open books' order.");
         System.out.println("Enter 'stop' to quit the app.");
 
-        action = input.nextLine();
+        Scanner input = new Scanner(System.in);
+        String action = input.nextLine();
 
-        while (action != null && action.equalsIgnoreCase(Actions.APART.toString())) {
-            System.out.println("Enter price for apartment reservation:");
-            userInput = input.nextLine();
+        if (action.equalsIgnoreCase(Actions.APART.toString())) {
+            makeApartmentReservation(input);
+        }
+
+        if (action.equalsIgnoreCase(Actions.BOOK.toString())) {
+            placeBooksOrder(input);
+        }
+    }
+
+    private static void makeApartmentReservation(Scanner scanner) {
+        System.out.println("Enter price for apartment reservation:");
+
+        RegisterService registerService = new RegisterService();
+        String userInput;
+
+        while (true) {
+            userInput = scanner.nextLine();
 
             if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
                 break;
@@ -39,10 +48,17 @@ public class Main {
                 System.out.println("Wrong input. Please check. It should be number.");
             }
         }
+    }
 
-        while (action != null && action.equalsIgnoreCase(Actions.BOOK.toString())) {
-            System.out.println("Enter books for order using comma without spaces:");
-            userInput = input.nextLine();
+    private static void placeBooksOrder(Scanner scanner) {
+        System.out.println("Enter books for order using comma without spaces:");
+
+        OrderService orderService = new OrderService();
+        String userInput;
+
+        while (true) {
+
+            userInput = scanner.nextLine();
 
             if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
                 break;

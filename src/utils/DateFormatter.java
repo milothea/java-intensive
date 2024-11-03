@@ -7,7 +7,7 @@ public class DateFormatter {
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     public DateFormatter() {}
 
-    public String formatDate(LocalDateTime date) {
-        return date.format(this.formatter);
+    public static String formatDate(LocalDateTime date) {
+        return date.format(formatter);
     }
 }
