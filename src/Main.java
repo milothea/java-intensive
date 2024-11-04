@@ -23,25 +23,25 @@ public class Main {
         do {
             boolean stopFlag = false;
 
-            if (action.equalsIgnoreCase(Actions.APART.toString())) {
+            if (isEqual(action, Actions.APART)) {
                 stopFlag = makeApartmentReservation(input, registerService);
             }
 
-            if (action.equalsIgnoreCase(Actions.BOOK.toString())) {
+            if (isEqual(action, Actions.BOOK)) {
                 stopFlag = placeBooksOrder(input, orderService);
             }
 
             if (stopFlag) {
                 break;
             }
-        } while (!action.equalsIgnoreCase(Actions.STOP.toString()));
+        } while (!isEqual(action, Actions.STOP));
     }
 
     private static boolean makeApartmentReservation(Scanner scanner, RegisterService service) {
         System.out.println("Enter price for apartment reservation:");
         String userInput = scanner.nextLine();
 
-        if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
+        if (isEqual(userInput, Actions.STOP)) {
             return true;
         }
 
@@ -61,7 +61,7 @@ public class Main {
         System.out.println("Enter books for order using comma without spaces:");
         String userInput = scanner.nextLine();
 
-        if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
+        if (isEqual(userInput, Actions.STOP)) {
             return true;
         }
 
@@ -75,5 +75,9 @@ public class Main {
         }
 
         return false;
+    }
+
+    private static boolean isEqual(String string, Actions action) {
+        return action.toString().toLowerCase().equals(string);
     }
 }
