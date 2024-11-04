@@ -20,22 +20,29 @@ public class Main {
         Scanner input = new Scanner(System.in);
         String action = input.nextLine();
 
-        if (action.equalsIgnoreCase(Actions.APART.toString())) {
-            makeApartmentReservation(input, registerService);
-        }
+        do {
+            boolean stopFlag = false;
 
-        if (action.equalsIgnoreCase(Actions.BOOK.toString())) {
-            placeBooksOrder(input, orderService);
-        }
+            if (action.equalsIgnoreCase(Actions.APART.toString())) {
+                stopFlag = makeApartmentReservation(input, registerService);
+            }
+
+            if (action.equalsIgnoreCase(Actions.BOOK.toString())) {
+                stopFlag = placeBooksOrder(input, orderService);
+            }
+
+            if (stopFlag) {
+                break;
+            }
+        } while (!action.equalsIgnoreCase(Actions.STOP.toString()));
     }
 
-    private static void makeApartmentReservation(Scanner scanner, RegisterService service) {
+    private static boolean makeApartmentReservation(Scanner scanner, RegisterService service) {
         System.out.println("Enter price for apartment reservation:");
-
         String userInput = scanner.nextLine();
 
         if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
-            return;
+            return true;
         }
 
         try {
@@ -43,18 +50,19 @@ public class Main {
             ApartmentReservation reservation = service.registerApartment(price);
 
             System.out.println(reservation.getReservationData());
-            makeApartmentReservation(scanner, service);
         } catch (NumberFormatException e) {
             System.out.println("Wrong input. Please check. It should be number.");
         }
+
+        return false;
     }
 
-    private static void placeBooksOrder(Scanner scanner, OrderService service) {
+    private static boolean placeBooksOrder(Scanner scanner, OrderService service) {
         System.out.println("Enter books for order using comma without spaces:");
         String userInput = scanner.nextLine();
 
         if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
-            return;
+            return true;
         }
 
         try {
@@ -62,9 +70,10 @@ public class Main {
             Order newOrder = service.createNewOrder(books);
 
             System.out.println(newOrder.getOrderData());
-            placeBooksOrder(scanner, service);
         } catch (NullPointerException exception) {
             System.out.println("Wrong input.");
         }
+
+        return false;
     }
 }
