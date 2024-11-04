@@ -11,67 +11,60 @@ import src.constants.Actions;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Enter 'apart' to book an apartment. Enter 'book' to open books' order.");
-        System.out.println("Enter 'stop' to quit the app.");
+        System.out.println("""
+            Enter 'apart' to book an apartment. Enter 'book' to open books' order.
+            Enter 'stop' to quit the app.""");
 
+        RegisterService registerService = new RegisterService();
+        OrderService orderService = new OrderService();
         Scanner input = new Scanner(System.in);
         String action = input.nextLine();
 
         if (action.equalsIgnoreCase(Actions.APART.toString())) {
-            makeApartmentReservation(input);
+            makeApartmentReservation(input, registerService);
         }
 
         if (action.equalsIgnoreCase(Actions.BOOK.toString())) {
-            placeBooksOrder(input);
+            placeBooksOrder(input, orderService);
         }
     }
 
-    private static void makeApartmentReservation(Scanner scanner) {
+    private static void makeApartmentReservation(Scanner scanner, RegisterService service) {
         System.out.println("Enter price for apartment reservation:");
 
-        RegisterService registerService = new RegisterService();
-        String userInput;
+        String userInput = scanner.nextLine();
 
-        while (true) {
-            userInput = scanner.nextLine();
+        if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
+            return;
+        }
 
-            if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
-                break;
-            }
+        try {
+            BigDecimal price = new BigDecimal(userInput);
+            ApartmentReservation reservation = service.registerApartment(price);
 
-            try {
-                BigDecimal price = new BigDecimal(userInput);
-                ApartmentReservation reservation = registerService.registerApartment(price);
-
-                System.out.println(reservation.getReservationData());
-            } catch (NumberFormatException e) {
-                System.out.println("Wrong input. Please check. It should be number.");
-            }
+            System.out.println(reservation.getReservationData());
+            makeApartmentReservation(scanner, service);
+        } catch (NumberFormatException e) {
+            System.out.println("Wrong input. Please check. It should be number.");
         }
     }
 
-    private static void placeBooksOrder(Scanner scanner) {
+    private static void placeBooksOrder(Scanner scanner, OrderService service) {
         System.out.println("Enter books for order using comma without spaces:");
+        String userInput = scanner.nextLine();
 
-        OrderService orderService = new OrderService();
-        String userInput;
+        if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
+            return;
+        }
 
-        while (true) {
+        try {
+            String[] books = userInput.split(",");
+            Order newOrder = service.createNewOrder(books);
 
-            userInput = scanner.nextLine();
-
-            if (userInput.equalsIgnoreCase(Actions.STOP.toString())) {
-                break;
-            }
-
-            try {
-                String[] books = userInput.split(",");
-                Order newOrder = orderService.createNewOrder(books);
-
-                System.out.println(newOrder.getOrderData());
-            } catch (NullPointerException exception) {
-                System.out.println("Wrong input.");
-            }
+            System.out.println(newOrder.getOrderData());
+            placeBooksOrder(scanner, service);
+        } catch (NullPointerException exception) {
+            System.out.println("Wrong input.");
         }
     }
 }

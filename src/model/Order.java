@@ -20,13 +20,13 @@ public class Order {
     }
 
     public String getOrderData() {
-        LocalDateTime date = this.getOrderDate();
+        String date = this.getOrderDateAsString();
         String[] books = this.getOrderedBooks();
         BigDecimal price = this.getTotalPrice();
 
         return String.format(
                 "Order with No. %d created on %s for books - %s - with total price %s",
-                this.getOrderNumber(), DateFormatter.formatDate(date), Arrays.toString(books), price
+                this.getOrderNumber(), date, Arrays.toString(books), price
         );
     }
 
@@ -34,8 +34,8 @@ public class Order {
         return this.orderNumber;
     }
 
-    private LocalDateTime getOrderDate() {
-        return this.orderDate;
+    private String getOrderDateAsString() {
+        return DateFormatter.formatDate(this.orderDate);
     }
 
     private String[] getOrderedBooks() {

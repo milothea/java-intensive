@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import src.model.ApartmentReservation;
 
 public class RegisterService {
-    private int APARTMENTS_COUNTER = 0;
+    private int apartmentCounter;
     public RegisterService() {}
 
     public ApartmentReservation registerApartment(BigDecimal price) {
@@ -17,10 +17,10 @@ public class RegisterService {
     }
 
     private int getCounter() {
-        return this.APARTMENTS_COUNTER;
+        return this.apartmentCounter;
     }
 
     private void setCounter(int value) {
-        this.APARTMENTS_COUNTER = value;
+        this.apartmentCounter = value;
     }
 }

@@ -5,7 +5,7 @@ import src.model.Order;
 import java.math.BigDecimal;
 
 public class OrderService {
-    private int ORDERS_COUNTER = 0;
+    private int ordersCounter;
     public OrderService () {}
 
     public Order createNewOrder (String[] books) {
@@ -17,10 +17,10 @@ public class OrderService {
     }
 
     private int getOrdersCounter() {
-        return this.ORDERS_COUNTER;
+        return this.ordersCounter;
     }
 
     private void setOrdersCounter(int value) {
-        this.ORDERS_COUNTER = value;
+        this.ordersCounter = value;
     }
 }

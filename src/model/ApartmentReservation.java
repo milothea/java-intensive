@@ -1,9 +1,9 @@
 package src.model;
 
+import src.utils.DateFormatter;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import src.utils.DateFormatter;
 
 public class ApartmentReservation {
     private int apartmentNumber;
@@ -17,17 +17,15 @@ public class ApartmentReservation {
     }
 
     public String getReservationData() {
-        LocalDateTime date = this.getDate();
+        String date = this.getDateAsString();
 
         return String.format(
                 "Reservation of the apartment No. %d is made on %s with price %s",
-                this.apartmentNumber, DateFormatter.formatDate(date), this.price
+                this.apartmentNumber, date, this.price
         );
     }
 
-    public LocalDateTime getDate() {
-        return this.bookingDate;
+    public String getDateAsString() {
+        return DateFormatter.formatDate(this.bookingDate);
     }
-
-
 }
