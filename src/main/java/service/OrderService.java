@@ -1,8 +1,8 @@
-package src.service;
+package service;
 
-import src.constants.Action;
-import src.model.Order;
-import src.utils.StringsComparator;
+import constants.Action;
+import model.Order;
+import utils.StringsComparator;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ public class OrderService {
     private static int ORDERS_COUNTER;
     public OrderService () {}
 
-    public static Order placeBooksOrder(Scanner scanner) {
+    public Order placeBooksOrder(Scanner scanner) {
         System.out.println("Enter books for order using comma without spaces:");
         String userInput = scanner.nextLine();
 
@@ -31,7 +31,7 @@ public class OrderService {
         return null;
     }
 
-    private static Order createNewOrder (String[] books) {
+    private Order createNewOrder (String[] books) {
         BigDecimal price = new BigDecimal(books.length);
         int orderNumber = getOrdersCounter() + 1;
 
@@ -40,11 +40,11 @@ public class OrderService {
         return new Order(price, books, orderNumber);
     }
 
-    private static int getOrdersCounter() {
+    private int getOrdersCounter() {
         return ORDERS_COUNTER;
     }
 
-    private static void setOrdersCounter(int value) {
+    private void setOrdersCounter(int value) {
         ORDERS_COUNTER = value;
     }
 }

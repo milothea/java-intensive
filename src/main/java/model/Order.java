@@ -1,10 +1,10 @@
-package src.model;
+package model;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
-import src.utils.DateFormatter;
+import utils.DateFormatter;
 
 public class Order {
     private int orderNumber;

@@ -1,17 +1,17 @@
-package src.service;
+package service;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
-import src.constants.Action;
-import src.model.ApartmentReservation;
-import src.utils.StringsComparator;
+import constants.Action;
+import model.ApartmentReservation;
+import utils.StringsComparator;
 
 public class RegisterService {
     private static int APARTMENTS_COUNTER;
     public RegisterService() {}
 
-    public static ApartmentReservation makeApartmentReservation(Scanner scanner) {
+    public ApartmentReservation makeApartmentReservation(Scanner scanner) {
         System.out.println("Enter price for apartment reservation:");
         String userInput = scanner.nextLine();
 
@@ -31,7 +31,7 @@ public class RegisterService {
         return null;
     }
 
-    private static ApartmentReservation registerApartment(BigDecimal price) {
+    private ApartmentReservation registerApartment(BigDecimal price) {
         int apartmentNumber = getCounter() + 1;
 
         setCounter(apartmentNumber);
@@ -39,11 +39,11 @@ public class RegisterService {
         return new ApartmentReservation(price, apartmentNumber);
     }
 
-    private static int getCounter() {
+    private int getCounter() {
         return APARTMENTS_COUNTER;
     }
 
-    private static void setCounter(int value) {
+    private void setCounter(int value) {
         APARTMENTS_COUNTER = value;
     }
 }
