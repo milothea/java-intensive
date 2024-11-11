@@ -1,81 +1,50 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import model.Order;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import utils.DateFormatter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OrderTest {
     Order order;
     BigDecimal price = new BigDecimal(50);
-    String[] books = {"Harry Potter", "The catcher in the rye", "To kill a mockingbird", "The hobbit", "Don Quixote"};
     String formattedDate = DateFormatter.formatDate(LocalDateTime.now());
-    int orderNumber;
 
-    @BeforeEach
-    void setUp() {
-        orderNumber += 1;
-        order = new Order(price, books, orderNumber);
+
+    static Stream<Arguments> getArguments() {
+        List<String> inputs = List.of(
+                "Harry Potter",
+                "Harry Potter,The catcher in the rye",
+                "Harry Potter,The catcher in the rye,To kill a mockingbird",
+                "Harry Potter,The catcher in the rye,To kill a mockingbird,The hobbit"
+        );
+
+        return IntStream.range(0, inputs.size())
+                .mapToObj((index) -> Arguments.arguments(inputs.get(index), index));
     }
-    @Test
-    void getOrderData() {
+
+    @ParameterizedTest
+    @MethodSource("getArguments")
+    void getOrderData(String input, int index) {
+        String[] books = input.split(",");
+        int orderNumber = index + 1;
+        Order order = new Order(price, books, orderNumber);
         String result = order.getOrderData();
         String expected = String.format(
                 "Order with No. %d created on %s for books - %s - with total price %s",
                 orderNumber, formattedDate, Arrays.toString(books), price
         );
 
+        assertNotNull(order);
         assertEquals(expected, result);
-    }
-
-    @Test
-    void getOrderNumber () throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method privateMethod = Order.class.getDeclaredMethod("getOrderNumber");
-
-        privateMethod.setAccessible(true);
-
-        int result = (int) privateMethod.invoke(order);
-
-        assertEquals(orderNumber, result);
-    }
-
-    @Test
-    void getOrderDateAsString() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method privateMethod = Order.class.getDeclaredMethod("getOrderDateAsString");
-
-        privateMethod.setAccessible(true);
-
-        String result = (String) privateMethod.invoke(order);
-
-        assertEquals(formattedDate, result);
-    }
-
-    @Test
-    void getOrderedBooks() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method privateMethod = Order.class.getDeclaredMethod("getOrderedBooks");
-
-        privateMethod.setAccessible(true);
-
-        String[] result = (String[]) privateMethod.invoke(order);
-
-        assertEquals(Arrays.toString(books), Arrays.toString(result));
-    }
-
-    @Test
-    void getTotalPrice() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method privateMethod = Order.class.getDeclaredMethod("getTotalPrice");
-
-        privateMethod.setAccessible(true);
-
-        BigDecimal result = (BigDecimal) privateMethod.invoke(order);
-
-        assertEquals(price, result);
     }
 }

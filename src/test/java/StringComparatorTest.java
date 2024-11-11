@@ -7,6 +7,7 @@ import utils.StringsComparator;
 import constants.Action;
 
 public class StringComparatorTest {
+
     @ParameterizedTest(name = "input is equal apart actions")
     @ValueSource(strings = {"apart", "Apart", "aparT", "APART"})
     void isEqualApart(String value) {

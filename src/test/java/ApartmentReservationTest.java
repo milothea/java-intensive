@@ -37,8 +37,6 @@ class ApartmentReservationTest {
 
     @Test
     void getDateAsString() {
-        doReturn(formattedDate).when(reservation).getDateAsString();
-
         String dateAsString = reservation.getDateAsString();
 
         assertNotNull(dateAsString);
