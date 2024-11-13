@@ -1,6 +1,6 @@
-package src.model;
+package model;
 
-import src.utils.DateFormatter;
+import utils.DateFormatter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

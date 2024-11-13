@@ -1,6 +1,6 @@
-package src.utils;
+package utils;
 
-import src.constants.Action;
+import constants.Action;
 
 public class StringsComparator {
     public StringsComparator() {}

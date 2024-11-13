@@ -1,14 +1,12 @@
-package src;
+package main;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import src.model.Order;
-import src.service.OrderService;
-import src.service.RegisterService;
-import src.model.ApartmentReservation;
-import src.constants.Action;
-import src.utils.StringsComparator;
+import model.*;
+import service.*;
+import utils.*;
+import constants.Action;
 
 public class Main {
     public static void main(String[] args) {

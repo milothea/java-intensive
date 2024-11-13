@@ -1,4 +1,4 @@
-package src.constants;
+package constants;
 
 public enum Action {
     APART("apart"), BOOK("book"), STOP("stop");
